@@ -113,7 +113,6 @@ export const Registro = () => {
       <div className='bg-gray-100'>
         <p className='text-center mx-auto font-bold'>2da. NOCHE BOHEMIA 2024 CLUB ROTARIO MEXICALI OESTE</p>
         <p className='text-center mx-auto'>Duración del evento: 18 de Otubre de 2024 apartir de las 18:00 a las 24:00 hrs.</p>
-        <p className='text-center mx-auto'>Duración del evento: 18 de Otubre de 2024 apartir de las 18:00 a las 24:00 hrs.</p>
         <p className='text-center mx-auto'>Llámanos al 686 119 5094 o envíanos un correo electrónico a ivan_lechuga@hotmail.com</p>
       </div>
       <div className="flex justify-center items-center p-10 bg-gray-100">

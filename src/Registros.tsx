@@ -1,5 +1,5 @@
 import { useBoletos } from "./hooks/useBoletos";
-
+import img from './assets/roeario-logo.png';
 
 export const Registros = () => {
 
@@ -12,6 +12,7 @@ export const Registros = () => {
   return (
     <>
       <header className=" top-0 left-0 p-4 text-center mx-auto bg-gray-100">
+        <img src={img} alt="avatar" className=" w-52 object-cover " />
         <h1 className="text-2xl font-semibold">Registros</h1>
       </header>
       <div className=" pt-4 relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -47,11 +48,19 @@ export const Registros = () => {
                 <td className="px-6 py-4">{boletos.phone}</td>
                 <td className="px-6 py-4">{boletos.attendees}</td>
                 <td className="px-6 py-4">{boletos.paymentMethod}</td>
-                <td className="px-6 py-4">{boletos.paymentReceipt}</td>
-                {/* generar un renglon de tipo checkbox */}
-                <td className="px-6 py-4">{boletos.isPaid ? 'Sí' : 'No'}</td>
                 <td className="px-6 py-4">
-                  <button onClick={() => handleButtonClick(boletos.id)} className="text-indigo-600 hover:text-indigo-900">Boleto</button>
+                  {boletos.paymentReceipt ? (
+                    <img src={boletos.paymentReceipt} alt="Recibo de pago" className="w-10 h-10 object-cover" />
+                  ) : (
+                    'No disponible'
+                  )}
+                </td>
+                {/* generar un renglon de tipo checkbox */}
+                <td className="px-6 py-4">
+                  <input type="checkbox" checked={boletos.isPaid} />
+                </td>
+                <td className="px-6 py-4">
+                  <button onClick={() => handleButtonClick(boletos.id)} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Boleto</button>
                 </td>
               </tr>
             ))}
