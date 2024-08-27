@@ -14,10 +14,10 @@ export const Registros = () => {
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [currentBoleto, setCurrentBoleto] = useState<Boleto | undefined>();
-  const { boletosCollection } = useBoletos();
+  const { boletosCollection,  editBoletos } = useBoletos();
 
 
-  const openModal = (boleto : Boleto) => {
+  const openModal = (boleto: Boleto) => {
     setCurrentBoleto(boleto);
     setModalIsOpen(true);
   };
@@ -27,19 +27,31 @@ export const Registros = () => {
     setCurrentBoleto(undefined);
   };
 
+  const handleOnSave = async (boleto: Boleto, file: File | null, filename: string) =>{
+    console.log(boleto);
+
+    setModalIsOpen(false)
+    await editBoletos(boleto, file!);
+    
+  }
+
 
 
   return (
-   <div className="container mx-auto">
-          {
-        modalIsOpen &&  
+    <div className=" ">
+      {
+        modalIsOpen &&
         <div>
-            <ModalEditRegistro boleto={currentBoleto!} onShowModal={ () => setModalIsOpen( (prev) => !prev)} />
+          <ModalEditRegistro
+            boleto={currentBoleto!}
+            onShowModal={() => setModalIsOpen((prev) => !prev)}
+            onSave={handleOnSave}
+          />
 
         </div>
       }
       <header className=" top-0 left-0 p-4 text-center mx-auto bg-gray-100">
-         <img src={img} alt="avatar" className=" w-52 object-cover " />
+        <img src={img} alt="avatar" className=" w-52 object-cover " />
         <h1 className="text-2xl font-semibold">Registros</h1>
       </header>
       <div className=" pt-4 relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -74,16 +86,16 @@ export const Registros = () => {
                 <td className="px-6 py-4">{boletos.attendees}</td>
                 <td className="px-6 py-4">{boletos.paymentMethod}</td>
                 <td className="px-6 py-4">
-                        {boletos.paymentReceipt ? (
-                            <img src={boletos.paymentReceipt} alt="Recibo de pago" className="w-20 h-20 object-cover" />
-                        ) : (
-                            'No disponible'
-                        )}
-                    </td>
+                  {boletos.paymentReceipt ? (
+                    <img src={boletos.paymentReceipt} alt="Recibo de pago" className="w-20 h-20 object-cover" />
+                  ) : (
+                    'No disponible'
+                  )}
+                </td>
                 {/* generar un renglon de tipo checkbox */}
                 <td className="px-6 py-4">{boletos.isPaid ? 'Sí' : 'No'}</td>
                 <td className="px-6 py-4">
-                <button onClick={() => openModal(boletos)} className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded flex items-center">
+                  <button onClick={() => openModal(boletos)} className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded flex items-center">
                     <FontAwesomeIcon icon={faEdit} className="mr-2" />
                     Editar
                   </button>
@@ -96,10 +108,10 @@ export const Registros = () => {
       </div>
 
 
-      
 
-      
-      </div>
+
+
+    </div>
 
   )
 }
