@@ -4,9 +4,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTicketAlt } from '@fortawesome/free-solid-svg-icons';
 
 
-import { ChangeEvent, FormEvent, useState } from "react";
+import {  useState } from "react";
 import { Boleto } from "./models/boletos";
 import { ModalEditRegistro } from "./ModalEditRegistro";
+import { Link } from "react-router-dom";
 
 
 
@@ -22,12 +23,13 @@ export const Registros = () => {
     setModalIsOpen(true);
   };
 
-  const closeModal = () => {
-    setModalIsOpen(false);
-    setCurrentBoleto(undefined);
-  };
+  // const closeModal = () => {
+  //   setModalIsOpen(false);
+  //   setCurrentBoleto(undefined);
+  // };
 
-  const handleOnSave = async (boleto: Boleto, file: File | null, filename: string) =>{
+  // const handleOnSave = async (boleto: Boleto, file: File | null, filename: string) =>{
+  const handleOnSave = async (boleto: Boleto, file: File | null) =>{
     console.log(boleto);
 
     setModalIsOpen(false)
@@ -99,6 +101,10 @@ export const Registros = () => {
                     <FontAwesomeIcon icon={faEdit} className="mr-2" />
                     Editar
                   </button>
+                  <Link to={`/boleto?id=${boletos.id}`} target="_blank" className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded flex items-center mt-2">
+                    <FontAwesomeIcon icon={faTicketAlt} className="mr-2" />
+                     Boleto
+                  </Link>
                 </td>
               </tr>
             ))}

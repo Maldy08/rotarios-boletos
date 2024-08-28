@@ -12,12 +12,12 @@ export const ModalEditRegistro = ({ boleto, onShowModal, onSave }: ModalEditRegi
     const [file, setFile] = useState<File | null>(null);
     const [filename, setFilename] = useState<string>('');
 
-    const handleEditChange = (e: ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        if (currentBoleto) {
-            setCurrentBoleto({ ...currentBoleto, [name]: value });
-        }
-    };
+    // const handleEditChange = (e: ChangeEvent<HTMLInputElement>) => {
+    //     const { name, value } = e.target;
+    //     if (currentBoleto) {
+    //         setCurrentBoleto({ ...currentBoleto, [name]: value });
+    //     }
+    // };
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.files?.length) {

@@ -100,6 +100,7 @@ export const Registro = () => {
       saveBoletos(boleto, file!);
       setFile(null);
       setFilename('');
+      alert('Registro guardado exitosamente');
       event.currentTarget.reset();
     }
   };
