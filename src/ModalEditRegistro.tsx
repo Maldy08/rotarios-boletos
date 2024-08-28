@@ -23,6 +23,9 @@ export const ModalEditRegistro = ({ boleto, onShowModal, onSave }: ModalEditRegi
         if (event.target.files?.length) {
             setFile(event.target.files[0]);
             setFilename(event.target.files[0].name);
+            if (currentBoleto) {
+                setCurrentBoleto({ ...currentBoleto, paymentReceipt: event.target.files[0].name });
+            }
         }
     };
 
@@ -90,7 +93,7 @@ export const ModalEditRegistro = ({ boleto, onShowModal, onSave }: ModalEditRegi
                                         <label className="block text-gray-800 text-sm font-semibold mb-2" htmlFor="paymentReceipt">
                                             Comprobante de pago
                                         </label>
-                                        <input onChange={handleFileChange} className="shadow-md appearance-none border border-gray-300 rounded-lg w-full py-3 px-4 text-gray-800 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" id="paymentReceipt" type="file" placeholder="Comprobante de pago" />
+                                        <input onChange={handleFileChange} className="shadow-md appearance-none border border-gray-300 rounded-lg w-full py-3 px-4 text-gray-800 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" id="paymentReceipt" type="file" accept="image/png, image/gif, image/jpeg" placeholder="Comprobante de pago" />
                                     </div>
                                 )}
 

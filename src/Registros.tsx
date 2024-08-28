@@ -56,7 +56,7 @@ export const Registros = () => {
         <img src={img} alt="avatar" className=" w-52 object-cover " />
         <h1 className="text-2xl font-semibold">Registros</h1>
       </header>
-      <div className=" pt-4 relative overflow-x-auto shadow-md sm:rounded-lg">
+      <div className=" container mx-auto pt-4 relative overflow-x-auto shadow-md sm:rounded-lg">
         <table className="  w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
@@ -96,15 +96,19 @@ export const Registros = () => {
                 </td>
                 {/* generar un renglon de tipo checkbox */}
                 <td className="px-6 py-4">{boletos.isPaid ? 'Sí' : 'No'}</td>
-                <td className="px-6 py-4">
+                <td className="px-6 py-4 flex">
                   <button onClick={() => openModal(boletos)} className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded flex items-center">
                     <FontAwesomeIcon icon={faEdit} className="mr-2" />
                     Editar
                   </button>
-                  <Link to={`/boleto?id=${boletos.id}`} target="_blank" className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded flex items-center mt-2">
-                    <FontAwesomeIcon icon={faTicketAlt} className="mr-2" />
-                     Boleto
-                  </Link>
+                  {
+                    boletos.isPaid && (
+                      <Link to={`/boleto?id=${boletos.id}`} target="_blank" className=" ml-1 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex items-center">
+                        <FontAwesomeIcon icon={faTicketAlt} className="mr-2" />
+                        Boleto
+                      </Link>
+                    ) 
+                  }
                 </td>
               </tr>
             ))}

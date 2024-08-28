@@ -15,6 +15,7 @@ import { boletosCollectionFirebase } from "../firebase/collections";
 
 export const useBoletos = () => {
   const [boletosCollection, setBoletosCollection] = useState<Boleto[]>([]);
+  const [reload, setReload] = useState(false);
 
   useEffect(() => {
     const getBoletos = async () => {
@@ -32,7 +33,7 @@ export const useBoletos = () => {
       setBoletosCollection(boletos);
     };
     getBoletos();
-  }, []);
+  }, [reload]);
 
   const saveBoletos = async (boletos: Boleto, file: File) => {
     let paymentReceiptUrl: string;
@@ -56,13 +57,13 @@ export const useBoletos = () => {
   const editBoletos = async (boletos: Boleto, file: File) => {
     let docRef: any;
     let publicImageUrl: string;
-    const q = query(boletosCollectionFirebase, where("id", "==", boletos.id));
+    const q = query(boletosCollectionFirebase, where("email", "==", boletos.email));
     const boleto = await getDocs(q);
     boleto.forEach((doc) => {
       docRef = doc.id;
     });
 
-    if (boletos.paymentReceipt.length > 0) {
+    if (file) {
       const storageRef = ref(FirebaseStorage, `receipts/${boletos.id}`);
       await uploadBytes(storageRef, file);
       publicImageUrl = await getDownloadURL(storageRef);
@@ -75,6 +76,7 @@ export const useBoletos = () => {
     await updateDoc(boletoRef, { ...boletos })
       .then(() => {
         console.log("Boleto edited");
+        setReload(!reload);
       })
       .catch((error) => {
         console.error("Error editing document: ", error);

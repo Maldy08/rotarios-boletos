@@ -139,6 +139,21 @@ export const Registro = () => {
             <input className="shadow-md appearance-none border border-gray-300 rounded-lg w-full py-3 px-4 text-gray-800 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" id="phone" type="tel" placeholder="Teléfono" />
             {formErrors.phone && <p className="text-red-500 text-sm mt-2">{formErrors.phone}</p>}
           </div>
+          {/* dropdown socio vendedor  */}
+          <div className="mb-6">
+            <label className="block text-gray-800 text-sm font-semibold mb-2" htmlFor="socio">
+              Socio Vendedor
+            </label>
+            <select className="shadow-md appearance-none border border-gray-300 rounded-lg w-full py-3 px-4 text-gray-800 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" id="socio">
+              <option value="">Selecciona un socio</option>
+              <option value="1">Socio 1</option>
+              <option value="2">Socio 2</option>
+              <option value="3">Socio 3</option>
+              <option value="4">Socio 4</option>
+              <option value="5">Socio 5</option>
+            </select>
+          </div>
+
           <div className="mb-6">
             <label className="block text-gray-800 text-sm font-semibold mb-2" htmlFor="attendees">
               Número de Asistentes
@@ -174,7 +189,7 @@ export const Registro = () => {
             <div className="flex flex-col space-y-2">
               <label className="inline-flex items-center">
                 <input onChange={handlePaymentMethodChange} type="radio" className="form-radio h-5 w-5 text-blue-600" name="payment-method" value="efectivo" />
-                <span className="ml-2 text-gray-700">Efectivo</span>
+                <span className="ml-2 text-gray-700">Efectivo ( boletos fisicos )</span>
               </label>
               <label className="inline-flex items-center">
                 <input onChange={handlePaymentMethodChange} type="radio" className="form-radio h-5 w-5 text-blue-600" name="payment-method" value="transferencia" />
@@ -192,7 +207,7 @@ export const Registro = () => {
               <label className="block text-gray-800 text-sm font-semibold mb-2" htmlFor="payment-receipt">
                 Subir Recibo de Transferencia o Depósito
               </label>
-              <input type="file" onChange={handleFileChange} className="shadow-md appearance-none border border-gray-300 rounded-lg w-full py-3 px-4 text-gray-800 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" id="payment-receipt" />
+              <input type="file" accept="image/png, image/gif, image/jpeg" onChange={handleFileChange} className="shadow-md appearance-none border border-gray-300 rounded-lg w-full py-3 px-4 text-gray-800 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" id="payment-receipt" />
             </div>
           ) : null}
           <div className="mb-6">
