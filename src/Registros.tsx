@@ -2,33 +2,22 @@ import { useBoletos } from "./hooks/useBoletos";
 import img from './assets/roeario-logo.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTicketAlt } from '@fortawesome/free-solid-svg-icons';
-
-
 import {  useState } from "react";
 import { Boleto } from "./models/boletos";
 import { ModalEditRegistro } from "./ModalEditRegistro";
 import { Link } from "react-router-dom";
 
 
-
 export const Registros = () => {
-
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [currentBoleto, setCurrentBoleto] = useState<Boleto | undefined>();
   const { boletosCollection,  editBoletos } = useBoletos();
-
 
   const openModal = (boleto: Boleto) => {
     setCurrentBoleto(boleto);
     setModalIsOpen(true);
   };
 
-  // const closeModal = () => {
-  //   setModalIsOpen(false);
-  //   setCurrentBoleto(undefined);
-  // };
-
-  // const handleOnSave = async (boleto: Boleto, file: File | null, filename: string) =>{
   const handleOnSave = async (boleto: Boleto, file: File | null) =>{
     console.log(boleto);
 
@@ -36,8 +25,6 @@ export const Registros = () => {
     await editBoletos(boleto, file!);
     
   }
-
-
 
   return (
     <div className=" ">
@@ -49,7 +36,6 @@ export const Registros = () => {
             onShowModal={() => setModalIsOpen((prev) => !prev)}
             onSave={handleOnSave}
           />
-
         </div>
       }
       <header className=" top-0 left-0 p-4 text-center mx-auto bg-gray-100">
@@ -114,13 +100,7 @@ export const Registros = () => {
             ))}
           </tbody>
         </table>
-
       </div>
-
-
-
-
-
     </div>
 
   )

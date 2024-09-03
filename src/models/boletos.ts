@@ -7,5 +7,6 @@ export interface Boleto {
     paymentMethod: string;
     paymentReceipt:string;
     isPaid: boolean;
+    socio: string;
 }
 

@@ -12,7 +12,7 @@ export const Registro = () => {
   const [fileError, setFileError] = useState<string>('');
   const [file, setFile] = useState<File | null>(null);
   const [filename, setFilename] = useState<string>('');
-  const [formErrors, setFormErrors] = useState<{ nombre?: string; email?: string; phone?: string; attendees?: string; paymentMethod?: string, confirmation?: string }>({});
+  const [formErrors, setFormErrors] = useState<{ nombre?: string; email?: string; phone?: string; attendees?: string; paymentMethod?: string, confirmation?: string, socio? : string }>({});
   const [selectedAttendees, setSelectedAttendees] = useState<string[]>([]);
 
   const handlePaymentMethodChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -20,7 +20,6 @@ export const Registro = () => {
   };
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    //console.log(event.target.files);
     if (event.target.files?.length) {
       setFile(event.target.files[0]);
       setFilename(event.target.files[0].name);
@@ -28,19 +27,26 @@ export const Registro = () => {
   }
 
   const handleAttendeesChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value;
-    setSelectedAttendees(prev =>
-      event.target.checked ? [...prev, value] : prev.filter(attendee => attendee !== value)
-    );
+    if (event.target.checked) {
+      setSelectedAttendees([...selectedAttendees, event.target.value]);
+    } else {
+      setSelectedAttendees(selectedAttendees.filter(attendee => attendee !== event.target.value));
+    }
   };
 
+  
+
+
   const validateForm = (event: React.FormEvent<HTMLFormElement>) => {
-    const errors: { nombre?: string; email?: string; phone?: string; attendees?: string; paymentMethod?: string, confirmation?: string } = {};
+    const errors: { nombre?: string; email?: string; phone?: string; attendees?: string; paymentMethod?: string, confirmation?: string, socio? : string } = {};
     const name = event.currentTarget['nombre'].value;
     const email = event.currentTarget['email'].value;
     const phone = event.currentTarget['phone'].value;
     const attendees = Array.from(event.currentTarget['attendees']).filter((input: any) => input.checked).map((input: any) => input.value);
     const confirmation = event.currentTarget['confirmation'].checked;
+    const socio = event.currentTarget['socio'].value;
+
+    console.log(socio)
 
     if (!name) {
       errors.nombre = '*El nombre es obligatorio.';
@@ -56,6 +62,10 @@ export const Registro = () => {
       errors.phone = '*El teléfono es obligatorio.';
     } else if (!/^\d{10}$/.test(phone)) {
       errors.phone = '*El teléfono debe tener 10 dígitos.';
+    }
+
+    if (socio === 'Selecciona un socio') {
+      errors.socio = '*Debe seleccionar un socio vendedor.';
     }
 
     if (attendees.length === 0) {
@@ -94,7 +104,8 @@ export const Registro = () => {
         paymentReceipt: filename,
         // paymentMethod === 'transferencia' || paymentMethod === 'deposito' ? event.currentTarget['payment-receipt'].files[0].name : null,
         id: Math.random().toString(36).substr(2, 9),
-        isPaid: false
+        isPaid: false,
+        socio: event.currentTarget['socio'].value
       }
 
       saveBoletos(boleto, file!);
@@ -109,7 +120,6 @@ export const Registro = () => {
     <>
       <header className=" top-0 left-0 p-4 text-center mx-auto bg-gray-100">
         <img src={img} alt="Logo" className=" mx-auto w-fit rounded-lg shadow-xl dark:shadow-gray-800" />
-
       </header>
       <div className='bg-gray-100'>
         <p className='text-center mx-auto font-bold'>2da. NOCHE BOHEMIA 2024 CLUB ROTARIO MEXICALI OESTE</p>
@@ -144,14 +154,21 @@ export const Registro = () => {
             <label className="block text-gray-800 text-sm font-semibold mb-2" htmlFor="socio">
               Socio Vendedor
             </label>
-            <select className="shadow-md appearance-none border border-gray-300 rounded-lg w-full py-3 px-4 text-gray-800 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" id="socio">
-              <option value="">Selecciona un socio</option>
-              <option value="1">Socio 1</option>
-              <option value="2">Socio 2</option>
-              <option value="3">Socio 3</option>
-              <option value="4">Socio 4</option>
-              <option value="5">Socio 5</option>
+            <select className="shadow-md appearance-none border border-gray-300 rounded-lg w-full py-3 px-4 text-gray-800 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" id="socio" name="socio">
+              <option value="Selecciona un socio">Selecciona un socio</option>
+              <option value="César Ángel Peña Salmón">César Ángel Peña Salmón</option>
+              <option value="Barraza Pérez Ma. Del Socorro">Barraza Pérez Ma. Del Socorro</option>
+              <option value="López Juvera Ramón">López Juvera Ramón</option>
+              <option value="Gilberto Arturo Carranza Paredes">Gilberto Arturo Carranza Paredes</option>
+              <option value="Eduardo Varela Cadena">Eduardo Varela Cadena</option>
+              <option value="Claudia Viviana Álvarez Vega">Claudia Viviana Álvarez Vega</option>
+              <option value="Joel Arias Medina">Joel Arias Medina </option>
+              <option value="María Leonor Cinco Ramírez">María Leonor Cinco Ramírez</option>
+              <option value="Armida Ruíz Salcedo">Armida Ruíz Salcedo</option>
+              <option value="Iván Lechuga">Iván Lechuga</option>
+              <option value="Rosario Torres Zolano">Rosario Torres Zolano</option>
             </select>
+            {formErrors.socio && <p className="text-red-500 text-sm mt-2">{formErrors.socio}</p>}
           </div>
 
           <div className="mb-6">
@@ -193,11 +210,11 @@ export const Registro = () => {
               </label>
               <label className="inline-flex items-center">
                 <input onChange={handlePaymentMethodChange} type="radio" className="form-radio h-5 w-5 text-blue-600" name="payment-method" value="transferencia" />
-                <span className="ml-2 text-gray-700">Transferencia 64 6020 1464 0408 6834 (STP)</span>
+                <span className="ml-2 text-gray-700">Transferencia 64 6020 1464 1464 0572 5631</span>
               </label>
               <label className="inline-flex items-center">
                 <input onChange={handlePaymentMethodChange} type="radio" className="form-radio h-5 w-5 text-blue-600" name="payment-method" value="deposito" />
-                <span className="ml-2 text-gray-700">Deposito OXXO 4217 4701 0339 8976</span>
+                <span className="ml-2 text-gray-700">Deposito OXXO 4217 4700 7320 5524</span>
               </label>
             </div>
             {formErrors.paymentMethod && <p className="text-red-500 text-sm mt-2">{formErrors.paymentMethod}</p>}
@@ -223,11 +240,12 @@ export const Registro = () => {
             </div>
             {formErrors.confirmation && <p className="text-red-500 text-sm mt-2">{formErrors.confirmation}</p>}
           </div>
-          <div className="flex items-center justify-between">
+          <div className="flex items-center ">
             <button className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50" type="submit">
               Enviar
             </button>
           </div>
+
         </form>
       </div>
     </>

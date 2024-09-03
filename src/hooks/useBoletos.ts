@@ -17,6 +17,7 @@ export const useBoletos = () => {
   const [boletosCollection, setBoletosCollection] = useState<Boleto[]>([]);
   const [reload, setReload] = useState(false);
 
+
   useEffect(() => {
     const getBoletos = async () => {
       const querySnapshot = await getDocs(collection(FirebaseDB, "boletos"));
@@ -36,6 +37,7 @@ export const useBoletos = () => {
   }, [reload]);
 
   const saveBoletos = async (boletos: Boleto, file: File) => {
+
     let paymentReceiptUrl: string;
 
     if (boletos.paymentReceipt.length > 0) {
@@ -48,6 +50,7 @@ export const useBoletos = () => {
     await addDoc(collection(FirebaseDB, "boletos"), boletos)
       .then(() => {
         console.log("Boleto saved");
+
       })
       .catch((error) => {
         console.error("Error adding document: ", error);
@@ -55,6 +58,7 @@ export const useBoletos = () => {
   };
 
   const editBoletos = async (boletos: Boleto, file: File) => {
+
     let docRef: any;
     let publicImageUrl: string;
     const q = query(boletosCollectionFirebase, where("email", "==", boletos.email));
@@ -77,6 +81,7 @@ export const useBoletos = () => {
       .then(() => {
         console.log("Boleto edited");
         setReload(!reload);
+
       })
       .catch((error) => {
         console.error("Error editing document: ", error);
@@ -87,5 +92,6 @@ export const useBoletos = () => {
     saveBoletos,
     boletosCollection,
     editBoletos,
+
   };
 };
