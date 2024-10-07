@@ -123,8 +123,8 @@ export const Registro = () => {
       </header>
       <div className='bg-gray-100'>
         <p className='text-center mx-auto font-bold'>2da. NOCHE BOHEMIA 2024 CLUB ROTARIO MEXICALI OESTE</p>
-        <p className='text-center mx-auto'>Duración del evento: 18 de Otubre de 2024 apartir de las 18:00 a las 24:00 hrs.</p>
-        <p className='text-center mx-auto'>Llámanos al 686 119 5094 o envíanos un correo electrónico a ivan_lechuga@hotmail.com</p>
+        <p className='text-center mx-auto'>Duración del evento: 18 de Otubre de 2024 apartir de las 19:00 a la 01:00 am</p>
+        <p className='text-center mx-auto'>Escríbenos al whatsapp 686 186 88 15 o al 686 270 40 83</p>
       </div>
       <div className="flex justify-center items-center p-10 bg-gray-100">
         <form className="bg-white p-6 rounded-lg shadow-lg w-full max-w-xl" onSubmit={handleSubmit}>
@@ -222,7 +222,7 @@ export const Registro = () => {
           {paymentMethod === 'transferencia' || paymentMethod === 'deposito' ? (
             <div className="mb-6">
               <label className="block text-gray-800 text-sm font-semibold mb-2" htmlFor="payment-receipt">
-                Subir Recibo de Transferencia o Depósito
+                Subir Recibo de Transferencia o Depósito 
               </label>
               <input type="file" accept="image/png, image/gif, image/jpeg" onChange={handleFileChange} className="shadow-md appearance-none border border-gray-300 rounded-lg w-full py-3 px-4 text-gray-800 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" id="payment-receipt" />
             </div>
